@@ -79,9 +79,9 @@ function love.mousepressed(x, y, button, istouch)
     --This checks for any clicks on the map rather than on buttons
     local mapPoly = {
       [1] = {x = 10, y = 40},
-      [2] = {x = 10, y = 440},
-      [3] = {x = 510, y = 440},
-      [4] = {x = 510, y = 40}
+      [2] = {x = 10, y = 490},
+      [3] = {x = 610, y = 490},
+      [4] = {x = 610, y = 40}
     }
     if CrossingsMultiplyTest(mapPoly, x, y) then
       for i in pairs(mapview) do
@@ -203,8 +203,9 @@ end
 
 function love.draw()
   drawMap()
-
   drawScore()
+  drawInfo()
+
   love.graphics.print("Free Peasants: "..peasants.free.amount, 620, 650)
   love.graphics.print("Wood Peasants: "..peasants.wood.amount, 620, 86)
   love.graphics.print("Stone Peasants: "..peasants.stone.amount, 620, 224)
@@ -218,7 +219,6 @@ function love.draw()
       love.graphics.print(v.text, v.x + 10, v.y + 10)
     end
   end
-  drawInfo()
 
 end
 

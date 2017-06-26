@@ -1,16 +1,18 @@
 function save(quit)
   local bitser = require 'bitser'
-
   local save = {}
+
   save.player = player
-  save.tiles = tiles
   save.peasants = peasants
   save.resources = resources
-save.cities=cities
+  save.cities = cities
   bitser.dumpLoveFile("save.dat", save)
-  if quit == 1 then
-    love.event.quit()
-  end
+  bitser.dumpLoveFile("tiles.dat", tiles)
+
+  save = nil
+    if quit == 1 then
+      love.event.quit()
+    end
 end
 
 function load()
@@ -18,8 +20,9 @@ function load()
 
   local gamedata = bitser.loadLoveFile('save.dat')
   player = gamedata.player
-  tiles = gamedata.tiles
+  tiles =   bitser.loadLoveFile("tiles.dat", save)
   peasants = gamedata.peasants
   resources = gamedata.resources
-  cities=gamedata.cities
+  cities = gamedata.cities
+  gamedata = nil
 end
