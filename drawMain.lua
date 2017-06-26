@@ -71,7 +71,7 @@ function drawMap()
       end
     end
   end
-  love.graphics.draw(player.png, mapview[0][0].x + 30, mapview[0][0].y + 20, 0, .75, .75)
+  love.graphics.draw(graphics.player, mapview[0][0].x + 30, mapview[0][0].y + 20, 0, .75, .75)
 
   -- Only allow rendering on pixels which have a stencil value greater than 0.
   love.graphics.setStencilTest()

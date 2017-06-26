@@ -5,7 +5,7 @@ tileTypes = {
 
 
 
-function newTile(x, y, w, h, d, mx, my)
+function newTile()
   local self = {}
   self.typenum = love.math.random(1, #tileTypes)
   local type = tileTypes[self.typenum]

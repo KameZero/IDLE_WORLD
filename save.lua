@@ -1,4 +1,4 @@
-function save()
+function save(quit)
   local bitser = require 'bitser'
 
   local save = {}
@@ -8,6 +8,9 @@ function save()
   save.resources = resources
 
   bitser.dumpLoveFile("save.dat", save)
+  if quit == 1 then
+    love.event.quit()
+  end
 end
 
 function load()

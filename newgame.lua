@@ -7,14 +7,14 @@ function newgame()
     free = {amount = 0, total = 0}
   }
   resources = {
-    wood = {amount = 1000, mult = 8},
-    stone = {amount = 1000, mult = 4},
-    metal = {amount = 1000, mult = 2},
-    unob = {amount = 1000, mult = 1},
+    wood = {amount = 0, mult = 8},
+    stone = {amount = 0, mult = 4},
+    metal = {amount = 0, mult = 2},
+    unob = {amount = 0, mult = 1},
   }
 
-  player = {level = 1, tileX = 0, tileY = 0, png = love.graphics.newImage('assets/player.png')
+  player = {level = 1, tileX = 0, tileY = 0, pngnum = 1
   }
   tiles = {}
-  --  save()
+  save()
 end
