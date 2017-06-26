@@ -5,7 +5,7 @@ tileUpgradeTypes = {
 
 
 function buildUpgrade(type)
-  if tiles[player.tileX][player.tileY].upgrade.typenum == 1 and resources.wood.amount >= tileUpgradeTypes["2"].cost.wood then
+  if tiles[player.tileX][player.tileY].upgrade.typenum == 1 and resources.wood.amount >= tileUpgradeTypes[2].cost.wood then
     tiles[player.tileX][player.tileY].upgrade = {x = love.math.random(5, 60), y = love.math.random(1, 40) + 25, type}
     resources.wood.amount = resources.wood.amount - 1000
     resources.stone.amount = resources.stone.amount - 1000

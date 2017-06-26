@@ -16,16 +16,16 @@ function drawMap()
 
   mapview = {}
   for i = -3, 4 do
-    mapview[tostring(i)] = {}
+    mapview[i] = {}
   end
   for i = 0, 4 do
-    mapview["-3"][tostring(i - 2)] = {x = -330 + (i * 60), y = (-58 + i * 104)}
-    mapview["-2"][tostring(i - 2)] = {x = -210 + (i * 60), y = (-58 + i * 104)}
-    mapview["-1"][tostring(i - 2)] = {x = -90 + (i * 60), y = (-58 + i * 104)}
-    mapview["0"][tostring(i - 2)] = {x = 30 + (i * 60), y = (-58 + i * 104)}
-    mapview["1"][tostring(i - 2)] = {x = 150 + (i * 60), y = (-58 + i * 104)}
-    mapview["2"][tostring(i - 2)] = {x = 270 + (i * 60), y = (-58 + i * 104)}
-    mapview["3"][tostring(i - 2)] = {x = 390 + (i * 60), y = (-58 + i * 104)}
+    mapview[-3][i - 2] = {x = -330 + (i * 60), y = (-58 + i * 104)}
+    mapview[-2][i - 2] = {x = -210 + (i * 60), y = (-58 + i * 104)}
+    mapview[-1][i - 2] = {x = -90 + (i * 60), y = (-58 + i * 104)}
+    mapview[0][i - 2] = {x = 30 + (i * 60), y = (-58 + i * 104)}
+    mapview[1][i - 2] = {x = 150 + (i * 60), y = (-58 + i * 104)}
+    mapview[2][i - 2] = {x = 270 + (i * 60), y = (-58 + i * 104)}
+    mapview[3][i - 2] = {x = 390 + (i * 60), y = (-58 + i * 104)}
   end
 
 
@@ -33,8 +33,8 @@ function drawMap()
 
   for y in pairs(mapview) do
     for z in pairs(mapview[y]) do
-      i = tostring(player.tileX + y)
-      v = tostring(player.tileY + z)
+      i = player.tileX + y
+      v = player.tileY + z
       if tiles[i] == nil then
         tiles[i] = {}
       end
@@ -71,7 +71,7 @@ function drawMap()
       end
     end
   end
-  love.graphics.draw(player.png, mapview["0"]["0"].x + 30, mapview["0"]["0"].y + 20, 0, .75, .75)
+  love.graphics.draw(player.png, mapview[0][0].x + 30, mapview[0][0].y + 20, 0, .75, .75)
 
   -- Only allow rendering on pixels which have a stencil value greater than 0.
   love.graphics.setStencilTest()

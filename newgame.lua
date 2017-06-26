@@ -13,7 +13,7 @@ function newgame()
     unob = {amount = 1000, mult = 1},
   }
 
-  player = {level = 1, tileX = "0", tileY = "0", png = love.graphics.newImage('assets/player.png')
+  player = {level = 1, tileX = 0, tileY = 0, png = love.graphics.newImage('assets/player.png')
   }
   tiles = {}
   --  save()

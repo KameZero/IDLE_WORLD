@@ -93,8 +93,8 @@ end
 
 function playerMove(x, y)
 print(x,y,mapview[x][y].tileX,mapview[x][y].tileY,player.tileX,player.tileY)
-  player.tileX = tostring(mapview[x][y].tileX)
-  player.tileY = tostring(mapview[x][y].tileY)
+  player.tileX = mapview[x][y].tileX
+  player.tileY = mapview[x][y].tileY
 end
 
 function love.mousereleased(x, y, button, istouch)
