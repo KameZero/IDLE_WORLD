@@ -8,9 +8,9 @@ end
 
 function drawMap()
   local function hexStencil()
-    love.graphics.rectangle("fill", 10, 40, 500, 400, 10, 10)
+    love.graphics.rectangle("fill", 10, 40, 600, 450, 10, 10)
   end
-  love.graphics.rectangle("line", 10, 40, 500, 400, 10, 10)
+  love.graphics.rectangle("line", 10, 40, 600, 450, 10, 10)
   love.graphics.stencil(hexStencil, "replace", 1)
   love.graphics.setStencilTest("greater", 0)
 
@@ -18,18 +18,18 @@ function drawMap()
   for i = -3, 4 do
     mapview[i] = {}
   end
-  for i = 0, 4 do
-    mapview[-3][i - 2] = {x = -330 + (i * 60), y = (-58 + i * 104)}
-    mapview[-2][i - 2] = {x = -210 + (i * 60), y = (-58 + i * 104)}
-    mapview[-1][i - 2] = {x = -90 + (i * 60), y = (-58 + i * 104)}
+
+  for i = 0, 5 do
+    mapview[ - 3][i - 2] = {x = -330 + (i * 60), y = (-58 + i * 104)}
+    mapview[ - 2][i - 2] = {x = -210 + (i * 60), y = (-58 + i * 104)}
+    mapview[ - 1][i - 2] = {x = -90 + (i * 60), y = (-58 + i * 104)}
     mapview[0][i - 2] = {x = 30 + (i * 60), y = (-58 + i * 104)}
     mapview[1][i - 2] = {x = 150 + (i * 60), y = (-58 + i * 104)}
     mapview[2][i - 2] = {x = 270 + (i * 60), y = (-58 + i * 104)}
     mapview[3][i - 2] = {x = 390 + (i * 60), y = (-58 + i * 104)}
+    mapview[4][i - 2] = {x = 510 + (i * 60), y = (-58 + i * 104)}
+
   end
-
-
-
 
   for y in pairs(mapview) do
     for z in pairs(mapview[y]) do
@@ -69,6 +69,9 @@ function drawMap()
       if tiles[i][v].upgrade.typenum ~= 1 then
         love.graphics.draw(tileUpgradeTypes[tiles[i][v].upgrade.typenum].png, mapview[y][z].x + tiles[i][v].upgrade.x, mapview[y][z].y + tiles[i][v].upgrade.y)
       end
+      if tiles[i][v].city then
+        love.graphics.draw(graphics.city, mapview[y][z].x, mapview[y][z].y + 15)
+      end
     end
   end
   love.graphics.draw(graphics.player, mapview[0][0].x + 30, mapview[0][0].y + 20, 0, .75, .75)
@@ -78,14 +81,21 @@ function drawMap()
 end
 
 function drawInfo()
-  love.graphics.print("Tile Type: "..tileTypes[tiles[player.tileX][player.tileY].typenum].name, 300, 465)
-  love.graphics.print("Tile location: "..player.tileX..","..player.tileY, 300, 480)
-  love.graphics.print("Tile Wood: "..tiles[player.tileX][player.tileY].wood * tileUpgradeTypes[tiles[player.tileX][player.tileY].upgrade.typenum].wood * resources.wood.mult, 300, 495)
-  love.graphics.print("Tile Stone: "..tiles[player.tileX][player.tileY].stone * tileUpgradeTypes[tiles[player.tileX][player.tileY].upgrade.typenum].stone * resources.stone.mult, 300, 510)
-  love.graphics.print("Tile Metal: "..tiles[player.tileX][player.tileY].metal * tileUpgradeTypes[tiles[player.tileX][player.tileY].upgrade.typenum].metal * resources.metal.mult, 300, 525)
-  love.graphics.print("Tile Unobtanium: "..tiles[player.tileX][player.tileY].unob * tileUpgradeTypes[tiles[player.tileX][player.tileY].upgrade.typenum].unob * resources.unob.mult, 300, 540)
-
-
-  love.graphics.rectangle("line", 10, 450, 500, 240, 10, 10)
+  infoPanel = {x = 10, y = 500, width = 600, height = 190}
+  local tileinfo = {
+    {text = "Tile Type: ", var = tileTypes[tiles[player.tileX][player.tileY].typenum].name},
+    {text = "Tile location: ", var = player.tileX..","..player.tileY},
+    {text = "Tile Wood: ", var = tiles[player.tileX][player.tileY].wood * tileUpgradeTypes[tiles[player.tileX][player.tileY].upgrade.typenum].wood * resources.wood.mult},
+    {text = "Tile Stone: ", var = tiles[player.tileX][player.tileY].stone * tileUpgradeTypes[tiles[player.tileX][player.tileY].upgrade.typenum].stone * resources.stone.mult},
+    {text = "Tile Metal: ", var = tiles[player.tileX][player.tileY].metal * tileUpgradeTypes[tiles[player.tileX][player.tileY].upgrade.typenum].metal * resources.metal.mult},
+    {text = "Tile Unobtanium: ", var = tiles[player.tileX][player.tileY].unob * tileUpgradeTypes[tiles[player.tileX][player.tileY].upgrade.typenum].unob * resources.unob.mult},
+  }
+  local mod = -1
+  for i = 1, #tileinfo do
+    v = tileinfo[i]
+    mod = mod + 1
+    love.graphics.print(v.text..v.var, infoPanel.x + infoPanel.width * 0.5 + 10, infoPanel.y + (15 * mod) + 5)
+  end
+  love.graphics.rectangle("line", infoPanel.x, infoPanel.y, infoPanel.width, infoPanel.height, 10, 10)
 
 end

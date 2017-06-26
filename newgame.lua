@@ -16,5 +16,6 @@ function newgame()
   player = {level = 1, tileX = 0, tileY = 0, pngnum = 1
   }
   tiles = {}
+  cities = {}
   save()
 end

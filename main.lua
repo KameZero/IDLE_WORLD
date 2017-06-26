@@ -11,6 +11,7 @@ function love.load()
   require("newgame")
   require("tileUpgrades")
   require("drawMain")
+  require("tileCity")
 
 
 
@@ -27,11 +28,13 @@ function love.load()
   graphics.down = love.graphics.newImage('assets/down.png')
   graphics.upgrade = love.graphics.newImage('assets/upgrade.png')
   graphics.upgradedown = love.graphics.newImage('assets/upgrade_down.png')
+  graphics.city = love.graphics.newImage('assets/town.png')
 
   -- Setup UI elements, this will need to be moved to different functions and put in the respective draw files
   buttons = {} --here's where you'll store all your buttons
   buttons["quit"] = buttonnew(0, 0, 100, 30, save, graphics.quit, graphics.quit,1)
-  buttons["upgrade"] = buttonnew(25, 470, 190, 45, buildUpgrade, graphics.upgrade, graphics.upgradedown, "2", "Chop dat wood boooois")
+  buttons["upgrade"] = buttonnew(25, 470, 190, 45, newCity, graphics.upgrade, graphics.upgradedown, "2", "Chop dat wood boooois")
+  buttons["mine"] = buttonnew(25, 470, 190, 45, newCity, graphics.upgrade, graphics.upgradedown, "2", "Chop dat wood boooois")
   buttons["wood"] = buttonnew(sw - 125, 25, 111, 128, resourceClick, graphics.wood, graphics.wood, "wood")
   buttons["stone"] = buttonnew(sw - 125, 163, 111, 128, resourceClick, graphics.stone, graphics.stone, "stone")
   buttons["metal"] = buttonnew(sw - 125, 301, 111, 128, resourceClick, graphics.metal, graphics.metal, "metal")
@@ -105,7 +108,6 @@ end
 
 function playerMove(x, y)
   --this simply moves the player.tileX and player.tile to the coordinates clicked on during the mousedown
-  print(x, y, mapview[x][y].tileX, mapview[x][y].tileY, player.tileX, player.tileY)
   player.tileX = mapview[x][y].tileX
   player.tileY = mapview[x][y].tileY
 end
