@@ -10,9 +10,9 @@ function save(quit)
   bitser.dumpLoveFile("tiles.dat", tiles)
 
   save = nil
-    if quit == 1 then
-      love.event.quit()
-    end
+  if quit == 1 then
+    love.event.quit()
+  end
 end
 
 function load()
@@ -20,7 +20,7 @@ function load()
 
   local gamedata = bitser.loadLoveFile('save.dat')
   player = gamedata.player
-  tiles =   bitser.loadLoveFile("tiles.dat", save)
+  tiles = bitser.loadLoveFile("tiles.dat", save)
   peasants = gamedata.peasants
   resources = gamedata.resources
   cities = gamedata.cities
