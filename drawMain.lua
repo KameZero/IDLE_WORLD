@@ -81,7 +81,7 @@ function drawMap()
 end
 
 function drawInfo()
-  infoPanel = {x = 10, y = 500, width = 600, height = 190}
+
   local tileinfo = {
     {text = "Tile Type: ", var = tileTypes[tiles[player.tileX][player.tileY].typenum].name},
     {text = "Tile location: ", var = player.tileX..","..player.tileY},
@@ -92,9 +92,19 @@ function drawInfo()
   }
   local mod = -1
   for i = 1, #tileinfo do
-    v = tileinfo[i]
+    local v = tileinfo[i]
     mod = mod + 1
     love.graphics.print(v.text..v.var, infoPanel.x + infoPanel.width * 0.5 + 10, infoPanel.y + (15 * mod) + 5)
+  end
+  local mod = -1
+  for i, v in pairs(infoButtons) do
+
+    mod = mod + 1
+    local t = infoPanel
+    love.graphics.draw(v.image, infoPanel.x + v.x, infoPanel.y + ((v.height+10)*mod)+5)
+    if v.text then
+      love.graphics.print(v.text, infoPanel.x + v.x + 10, infoPanel.y + ((v.height+10)*mod) + 10)
+    end
   end
   love.graphics.rectangle("line", infoPanel.x, infoPanel.y, infoPanel.width, infoPanel.height, 10, 10)
 
