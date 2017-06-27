@@ -4,7 +4,7 @@ function love.load()
   love.window.setTitle("IDLE_WORLD")
   sw, sh = love.graphics.getDimensions()
 
-  -- load up all of the .lua files we're suing
+  -- load up all of the .lua files we're using
   require("pointwithinshape")
   require("map")
   require("save")
@@ -51,7 +51,7 @@ function love.load()
   --Organized as:"x", "y", "width", "height", "function to run when clicked", "drawable" ,"Drawable when clicked" ,
   --"arguments for function", "any text that should be on the button"
 
-  --init any variables we need
+  --init any global variables we need
   autoGatherTime = 0
   autosaveTime = 0
 
