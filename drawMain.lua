@@ -1,4 +1,11 @@
 function drawScore()
+  love.graphics.rectangle("line", scorePanel.x, scorePanel.y, scorePanel.width, scorePanel.height, 10, 10)
+  for i, v in pairs(topButtons) do
+    love.graphics.draw(v.image, v.x, v.y)
+    if v.text then
+      love.graphics.print(v.text, v.x + 10, v.y + 5)
+    end
+  end
   love.graphics.print("Wood: "..resources.wood.amount, 150, 10)
   love.graphics.print("Stone: "..resources.stone.amount, 250, 10)
   love.graphics.print("Metal: "..resources.metal.amount, 350, 10)
@@ -61,7 +68,7 @@ function drawMap()
       end
     end
   end
-  love.graphics.setColor(255, 255, 255 )
+love.graphics.setColor(255, 255, 255 )
   for y in pairs(mapview) do
     for z in pairs(mapview[y]) do
       local i = mapview[y][z].tileX
@@ -74,7 +81,7 @@ function drawMap()
       end
     end
   end
-  love.graphics.draw(graphics.player, mapview[0][0].x + 30, mapview[0][0].y + 20, 0, .75, .75)
+  love.graphics.draw(playerModels[player.pngnum].png, mapview[0][0].x + 30, mapview[0][0].y + 20, 0, .75, .75)
 
   -- Only allow rendering on pixels which have a stencil value greater than 0.
   love.graphics.setStencilTest()

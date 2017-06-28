@@ -1,7 +1,6 @@
 function loadGraphics()
 
   graphics = {}
-  graphics.player = love.graphics.newImage('assets/player.png')
   graphics.wood = love.graphics.newImage('assets/wood.png')
   graphics.quit = love.graphics.newImage('assets/quit.jpg')
   graphics.stone = love.graphics.newImage('assets/stone.png')
@@ -11,8 +10,11 @@ function loadGraphics()
   graphics.up = love.graphics.newImage('assets/up.png')
   graphics.down = love.graphics.newImage('assets/down.png')
   graphics.upgrade = love.graphics.newImage('assets/upgrade.png')
+  graphics.settings = love.graphics.newImage('assets/settings.png')
   graphics.upgradedown = love.graphics.newImage('assets/upgrade_down.png')
   graphics.city = love.graphics.newImage('assets/town.png')
+  playerModels = {}
+  table.insert(playerModels, {png = love.graphics.newImage('assets/player.png')})
 end
 
 function loadVars()
@@ -31,18 +33,31 @@ end
 function loadUI()
 
   --set location of UI elements
+  scorePanel = {x = 10, y = 5, width = sw - 15, height = 30}
   infoPanel = {x = 10, y = 500, width = 600, height = 190}
   resourcePanel = {x = sw - 125, y = 25}
-  --Load everything from the top bar
+  settingsPanel = {x = sw / 2 - 150, y = sh / 2 - 200, width = 300, height = 400}
 
+  --Load settings menu
+  settingsButtons = {}
+  table.insert(settingsButtons, buttonnew(settingsPanel.x, settingsPanel.y, 190, 45, save, graphics.upgrade, graphics.upgradedown, 1, "Save and Quit", #settingsButtons))
+  table.insert(settingsButtons, buttonnew(settingsPanel.x, settingsPanel.y, 190, 45, save, graphics.upgrade, graphics.upgradedown, "1", "Delete Save", #settingsButtons))
+  table.insert(settingsButtons, buttonnew(settingsPanel.x, settingsPanel.y + settingsPanel.height, 190, 45, state, graphics.upgrade, graphics.upgradedown, "main", "Cancel", - (#settingsButtons -1)))
+  table.insert(settingsButtons, buttonnew(settingsPanel.x, settingsPanel.y + settingsPanel.height, 190, 45, love.graphics.setBackgroundColor, graphics.upgrade, graphics.upgradedown, {love.math.random(1, 255), love.math.random(1, 255), love.math.random(1, 255)}, "Random", - (#settingsButtons -1)))
+  table.insert(settingsButtons, buttonnew(settingsPanel.x, settingsPanel.y + settingsPanel.height, 190, 45, love.graphics.setBackgroundColor, graphics.upgrade, graphics.upgradedown, {0, 0, 0}, "Black", - (#settingsButtons -1)))
+
+
+  --Load everything from the top bar
+  topButtons = {}
+  table.insert(topButtons, buttonnew(scorePanel.x, scorePanel.y, 65, 20, state, graphics.settings, graphics.settings, "settings", "Settings", #topButtons))
 
   --Load everything from the mapview
 
 
   --Load everything from the info panel
   infoButtons = {}
-  table.insert(infoButtons, buttonnew(infoPanel.x, infoPanel.y, 190, 45, newCity, graphics.upgrade, graphics.upgradedown, "2", "Chop dat wood boooois", #infoButtons))
-  table.insert(infoButtons, buttonnew(infoPanel.x, infoPanel.y, 190, 45, newCity, graphics.upgrade, graphics.upgradedown, "2", "Chop dat wood boooois", #infoButtons))
+  table.insert(infoButtons, buttonnew(infoPanel.x, infoPanel.y, 190, 45, buildUpgrade, graphics.upgrade, graphics.upgradedown, "2", "Build a Mine", #infoButtons))
+  table.insert(infoButtons, buttonnew(infoPanel.x, infoPanel.y, 190, 45, newCity, graphics.upgrade, graphics.upgradedown, "2", "Build a City", #infoButtons))
 
   -- Load everything from the click area
 

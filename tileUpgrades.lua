@@ -1,6 +1,6 @@
 tileUpgradeTypes = {
   {name = "None", png = nil, wood = 1, stone = 1, metal = 1, unob = 1},
-  {name = "Mine", png = love.graphics.newImage('assets/mine.png'), wood = .5, stone = 1, metal = 4, unob = 1.1, cost={wood=1000,stone=1000,metal=1000}},
+  {name = "Mine", png = love.graphics.newImage('assets/mine.png'), wood = .5, stone = 1, metal = 4, unob = 1.1, cost = {wood = 1000, stone = 1000, metal = 1000}},
 }
 
 

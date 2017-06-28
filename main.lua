@@ -14,48 +14,61 @@ function love.load()
   require("tileCity")
   require("ui")
   require("load")
+  require("states")
+  require("settings")
 
   loadGraphics()
   loadUI()
   loadVars()
   loadSave()
+  state = "main"
 end
 
 -- here we put in anything we want run when the mouse is DOWN
 function love.mousepressed(x, y, button, istouch)
   if button == 1 then
-    -- this changes any button that is clicked to change to it's down drawable and move down by 4 pixels giving us a nice click
-    for i, v in pairs(infoButtons) do
-      testButton(i,v,x,y)
-    end
-    for i, v in pairs(resourceButtons) do
-      testButton(i,v,x,y)
-    end
-    --This checks for any clicks on the map rather than on buttons
-    local mapPoly = {
-      [1] = {x = 10, y = 40},
-      [2] = {x = 10, y = 490},
-      [3] = {x = 610, y = 490},
-      [4] = {x = 610, y = 40}
-    }
-    if CrossingsMultiplyTest(mapPoly, x, y) then
-      for i in pairs(mapview) do
-        for v in pairs(mapview[i]) do
-          local polygon = {
-            [1] = {x = mapview[i][v].x, y = mapview[i][v].y + 35},
-            [2] = {x = mapview[i][v].x + 60, y = mapview[i][v].y},
-            [3] = {x = mapview[i][v].x + 119, y = mapview[i][v].y + 35},
-            [4] = {x = mapview[i][v].x + 119, y = mapview[i][v].y + 105},
-            [5] = {x = mapview[i][v].x + 60, y = mapview[i][v].y + 139},
-            [6] = {x = mapview[i][v].x, y = mapview[i][v].y + 105}
-          }
-          if CrossingsMultiplyTest(polygon, x, y) == true then
+    if state == "main" then
+      -- this changes any button that is clicked to change to it's down drawable and move down by 4 pixels giving us a nice click
+      for i, v in pairs(infoButtons) do
+        testButton(i, v, x, y)
+      end
+      for i, v in pairs(resourceButtons) do
+        testButton(i, v, x, y)
+      end
+      for i, v in pairs(topButtons) do
+        testButton(i, v, x, y)
+      end
+      --This checks for any clicks on the map rather than on buttons
+      local mapPoly = {
+        [1] = {x = 10, y = 40},
+        [2] = {x = 10, y = 490},
+        [3] = {x = 610, y = 490},
+        [4] = {x = 610, y = 40}
+      }
+      if CrossingsMultiplyTest(mapPoly, x, y) then
+        for i in pairs(mapview) do
+          for v in pairs(mapview[i]) do
+            local polygon = {
+              [1] = {x = mapview[i][v].x, y = mapview[i][v].y + 35},
+              [2] = {x = mapview[i][v].x + 60, y = mapview[i][v].y},
+              [3] = {x = mapview[i][v].x + 119, y = mapview[i][v].y + 35},
+              [4] = {x = mapview[i][v].x + 119, y = mapview[i][v].y + 105},
+              [5] = {x = mapview[i][v].x + 60, y = mapview[i][v].y + 139},
+              [6] = {x = mapview[i][v].x, y = mapview[i][v].y + 105}
+            }
+            if CrossingsMultiplyTest(polygon, x, y) == true then
 
-            playerMove(i, v)
+              playerMove(i, v)
 
 
+            end
           end
         end
+      end
+    end
+    if state == "settings" then
+      for i, v in pairs(settingsButtons) do
+        testButton(i, v, x, y)
       end
     end
   end
@@ -105,9 +118,9 @@ function peasantsell(t)
   end
 end
 
-function buttonnew(x, y, w, h, f, u, d, a, t,uin)
+function buttonnew(x, y, w, h, f, u, d, a, t, uin)
   local self = {}
-  self.x = x+5
+  self.x = x + 5
   self.y = y + 5 + ((h + 10) * uin)
   self.width = w
   self.height = h
@@ -157,24 +170,28 @@ function love.update(dt)
 end
 
 function love.draw()
-  drawMap()
-  drawScore()
-  drawInfo()
+  if state == "main" or state == "settings" then
+    drawMap()
+    drawScore()
+    drawInfo()
 
-  love.graphics.print("Free Peasants: "..peasants.free.amount, 620, 650)
-  love.graphics.print("Wood Peasants: "..peasants.wood.amount, 620, 86)
-  love.graphics.print("Stone Peasants: "..peasants.stone.amount, 620, 224)
-  love.graphics.print("Metal Peasants: "..peasants.metal.amount, 620, 362)
-  love.graphics.print("Unobtanium Peasants: "..peasants.unob.amount, 580, 500)
+    love.graphics.print("Free Peasants: "..peasants.free.amount, 620, 650)
+    love.graphics.print("Wood Peasants: "..peasants.wood.amount, 620, 86)
+    love.graphics.print("Stone Peasants: "..peasants.stone.amount, 620, 224)
+    love.graphics.print("Metal Peasants: "..peasants.metal.amount, 620, 362)
+    love.graphics.print("Unobtanium Peasants: "..peasants.unob.amount, 580, 500)
 
-  for i, v in pairs(resourceButtons) do
+    for i, v in pairs(resourceButtons) do
 
-    love.graphics.draw(v.image, v.x, v.y)
-    if v.text then
-      love.graphics.print(v.text, v.x + 10, v.y + 10)
+      love.graphics.draw(v.image, v.x, v.y)
+      if v.text then
+        love.graphics.print(v.text, v.x + 10, v.y + 10)
+      end
     end
   end
-
+  if state == "settings" then
+    drawSettings()
+  end
 end
 
 function love.keypressed( key )
