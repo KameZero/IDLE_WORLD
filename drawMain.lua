@@ -96,14 +96,10 @@ function drawInfo()
     mod = mod + 1
     love.graphics.print(v.text..v.var, infoPanel.x + infoPanel.width * 0.5 + 10, infoPanel.y + (15 * mod) + 5)
   end
-  local mod = -1
   for i, v in pairs(infoButtons) do
-
-    mod = mod + 1
-    local t = infoPanel
-    love.graphics.draw(v.image, infoPanel.x + v.x, infoPanel.y + ((v.height+10)*mod)+5)
+    love.graphics.draw(v.image, v.x, v.y)
     if v.text then
-      love.graphics.print(v.text, infoPanel.x + v.x + 10, infoPanel.y + ((v.height+10)*mod) + 10)
+      love.graphics.print(v.text, v.x + 10, v.y + 5)
     end
   end
   love.graphics.rectangle("line", infoPanel.x, infoPanel.y, infoPanel.width, infoPanel.height, 10, 10)

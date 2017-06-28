@@ -12,12 +12,13 @@ function love.load()
   require("tileUpgrades")
   require("drawMain")
   require("tileCity")
+  require("ui")
   require("load")
 
-loadGraphics()
-loadUI()
-loadVars()
-loadSave()
+  loadGraphics()
+  loadUI()
+  loadVars()
+  loadSave()
 end
 
 -- here we put in anything we want run when the mouse is DOWN
@@ -25,13 +26,10 @@ function love.mousepressed(x, y, button, istouch)
   if button == 1 then
     -- this changes any button that is clicked to change to it's down drawable and move down by 4 pixels giving us a nice click
     for i, v in pairs(infoButtons) do
-      local polygon = {[1] = {x = v.x, y = v.y}, [2] = {x = v.x + v.width, y = v.y}, [3] = {x = v.x + v.width, y = v.y + v.height}, [4] = {x = v.x, y = v.y + v.height}}
-      if CrossingsMultiplyTest(polygon, x, y) == true then
-        v.image = v.down
-        v.y = v.y + 4
-        downtile = v
-        downshape = polygon
-      end
+      testButton(i,v,x,y)
+    end
+    for i, v in pairs(resourceButtons) do
+      testButton(i,v,x,y)
     end
     --This checks for any clicks on the map rather than on buttons
     local mapPoly = {
@@ -107,10 +105,10 @@ function peasantsell(t)
   end
 end
 
-function buttonnew(x, y, w, h, f, u, d, a, t)
+function buttonnew(x, y, w, h, f, u, d, a, t,uin)
   local self = {}
-  self.x = x
-  self.y = y
+  self.x = x+5
+  self.y = y + 5 + ((h + 10) * uin)
   self.width = w
   self.height = h
   self.fun = f
