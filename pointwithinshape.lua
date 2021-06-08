@@ -11,16 +11,16 @@ function PointWithinShape(shape, tx, ty)
 end
 
 function BoundingBox(box, tx, ty)
-	return (box[2].x >= tx and box[2].y >= ty)
-	and (box[1].x <= tx and box[1].y <= ty)
-	or (box[1].x >= tx and box[2].y >= ty)
-	and (box[2].x <= tx and box[1].y <= ty)
+	return	(box[2].x >= tx and box[2].y >= ty)
+		and (box[1].x <= tx and box[1].y <= ty)
+		or  (box[1].x >= tx and box[2].y >= ty)
+		and (box[2].x <= tx and box[1].y <= ty)
 end
 
 function colinear(line, x, y, e)
 	e = e or 0.1
 	m = (line[2].y - line[1].y) / (line[2].x - line[1].x)
-	local function f(x) return line[1].y + m * (x - line[1].x) end
+	local function f(x) return line[1].y + m*(x - line[1].x) end
 	return math.abs(y - f(x)) <= e
 end
 
@@ -82,7 +82,7 @@ function CrossingsMultiplyTest(pgon, tx, ty)
 	yflag0 = ( vtx0.y >= ty )
 	inside_flag = false
 
-	for i = 2, numverts + 1 do
+	for i=2,numverts+1 do
 		yflag1 = ( vtx1.y >= ty )
 
 		--[[ Check if endpoints straddle (are on opposite sides) of X axis
@@ -105,17 +105,17 @@ function CrossingsMultiplyTest(pgon, tx, ty)
 			 * polygon inclusion tests.
 			 --]]
 			if ( ((vtx1.y - ty) * (vtx0.x - vtx1.x) >= (vtx1.x - tx) * (vtx0.y - vtx1.y)) == yflag1 ) then
-				inside_flag = not inside_flag
+				inside_flag =  not inside_flag
 			end
 		end
 
 		-- Move to the next pair of vertices, retaining info as possible.
-		yflag0 = yflag1
-		vtx0 = vtx1
-		vtx1 = pgon[i]
+		yflag0  = yflag1
+		vtx0    = vtx1
+		vtx1    = pgon[i]
 	end
 
-	return inside_flag
+	return  inside_flag
 end
 
 function GetIntersect( points )
@@ -134,17 +134,17 @@ function GetIntersect( points )
 	local xk = 0
 	local yk = 0
 
-	if checkIntersect({x = g1, y = h1}, {x = g2, y = h2}, {x = i1, y = j1}, {x = i2, y = j2}) then
-		local a = h2 - h1
-		local b = (g2 - g1)
-		local v = ((h2 - h1) * g1) - ((g2 - g1) * h1)
+	if checkIntersect({x=g1, y=h1}, {x=g2, y=h2}, {x=i1, y=j1}, {x=i2, y=j2}) then
+		local a = h2-h1
+		local b = (g2-g1)
+		local v = ((h2-h1)*g1) - ((g2-g1)*h1)
 
-		local d = i2 - i1
-		local c = (j2 - j1)
-		local w = ((j2 - j1) * i1) - ((i2 - i1) * j1)
+		local d = i2-i1
+		local c = (j2-j1)
+		local w = ((j2-j1)*i1) - ((i2-i1)*j1)
 
-		xk = (1 / ((a * d) - (b * c))) * ((d * v) - (b * w))
-		yk = (-1 / ((a * d) - (b * c))) * ((a * w) - (c * v))
+		xk = (1/((a*d)-(b*c))) * ((d*v)-(b*w))
+		yk = (-1/((a*d)-(b*c))) * ((a*w)-(c*v))
 	end
 	return xk, yk
 end
